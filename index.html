@@ -12,26 +12,38 @@
     <script type="application/javascript" src="js/moment-with-locales.min.js"></script>
     <script type="application/javascript" src="js/bootstrap.min.js"></script>
     <script type="application/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+    <script type="application/javascript" src="js/credentials.js"></script>
+    <script type="application/javascript" src="js/trackmybank.js"></script>
 </head>
-<body>
+<body onload="trackmybank.init();">
 
 <h1>Track my bank!</h1>
 
-<form action="#" id="add-form">
-    <label for="date_t">Date de la transaction</label>
-    <input id="date_t" class="datemask datepicker" autocomplete="off"/>
-    <label for="amount">Montant</label>
-    <input class="money decimal" id="amount"/>
-    <label for="category">Catégorie</label>
-    <select id="category" class="select2">
-        <option></option>
-        <option value="1">Catégorie 1</option>
-        <option value="2">Catégorie 2</option>
-    </select>
-    <button id="send">Envoyer</button>
-    <button id="add-subtr">Nouvel item</button>
-    <button id="reset">Annuler</button>
-</form>
+<div id="login">
+    <form action="#" id="login-form">
+        <label for="password">Pin</label>
+        <input id="password" type="password"/>
+        <button type="button" id="dologin">Se connecter</button>
+    </form>
+</div>
+
+<div id="logged" style="display: none;">
+    <form action="#" id="add-form">
+        <label for="date_t">Date de la transaction</label>
+        <input id="date_t" class="datemask datepicker" autocomplete="off"/>
+        <label for="amount">Montant</label>
+        <input class="money decimal" id="amount"/>
+        <label for="category">Catégorie</label>
+        <select id="category" class="select2">
+            <option></option>
+            <option value="1">Catégorie 1</option>
+            <option value="2">Catégorie 2</option>
+        </select>
+        <button id="send">Envoyer</button>
+        <button id="add-subtr">+ item</button>
+        <button id="reset">Annuler</button>
+    </form>
+</div>
 
 </body>
 </html>

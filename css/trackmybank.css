@@ -47,3 +47,17 @@ form button {
     margin-right: 40px;
     padding: 10px 20px;
 }
+
+#login {
+    height: calc(100% - 110px);
+    padding-top: calc(50% - 90px);
+    padding-bottom: 50%;
+}
+
+#login form input, #login form label, #login form button {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}

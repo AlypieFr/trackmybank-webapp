@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>TrackMyBank! Web app</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/trackmybank.css"/>
+    <script type="application/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="application/javascript" src="js/moment-with-locales.min.js"></script>
+    <script type="application/javascript" src="js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+</head>
+<body>
+
+<h1>Track my bank!</h1>
+
+<form action="#" id="add-form">
+    <label for="date_t">Date de la transaction</label>
+    <input id="date_t" class="datemask datepicker" autocomplete="off"/>
+    <label for="amount">Montant</label>
+    <input class="money decimal" id="amount"/>
+    <label for="category">Catégorie</label>
+    <select id="category" class="select2">
+        <option></option>
+        <option value="1">Catégorie 1</option>
+        <option value="2">Catégorie 2</option>
+    </select>
+    <button id="send">Envoyer</button>
+    <button id="add-subtr">Ajouter un élément</button>
+    <button id="reset">Annuler</button>
+</form>
+
+</body>
+</html>

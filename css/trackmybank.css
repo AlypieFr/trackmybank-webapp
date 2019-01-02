@@ -1,0 +1,47 @@
+@font-face {
+    font-family: signatra;
+    src: url(../fonts/Signatra.otf);
+}
+
+body {
+    background: #200444;
+    color: #fff;
+}
+
+h1 {
+    display: block;
+    height: 110px;
+    background: #000 url("../img/trackmybank.png") no-repeat 5px 5px;
+    background-size: 100px 100px;
+    font-family: signatra;
+    font-size: 60pt;
+    line-height: 110px;
+    margin-top: 0;
+    text-align: center;
+}
+
+form {
+    padding: 20px;
+}
+
+form label, form input, form select {
+    width: 100%;
+    font-size: 30pt;
+}
+
+form label {
+    margin-top: 20px;
+}
+
+form select {
+    height: 70px;
+    color: #000
+}
+
+form button {
+    margin-top: 40px;
+    font-size: 30pt;
+    color: black;
+    margin-right: 20px;
+    padding: 10px;
+}

@@ -13,7 +13,7 @@ trackmybank.init = function() {
         e.preventDefault();
     });
     $("#add-subtr").on("click touch", trackmybank.add_transaction);
-    trackmybank.transaction_html = $("#transactions .transaction:first");
+    $("#del-subtr").on("click touch", trackmybank.del_transaction);
     $("#reset").on("click touch", trackmybank.cancel);
 };
 
@@ -28,7 +28,9 @@ trackmybank.set_datemask = function (element) {
         weekStart: 1,
         todayBtn: "linked",
         language: "fr",
-        autoclose: true
+        autoclose: true,
+        forceParse: false,
+        todayHighlight: true
     }).attr("readonly", "readonly");
 };
 
@@ -54,17 +56,29 @@ trackmybank.login = function() {
                 }
                 trackmybank.init_special_fields();
                 credentials.token = data["token"];
+                $("#date_t").val( moment().format('DD/MM/YYYY') );
+                trackmybank.transaction_html = $("#transactions .transaction:first").clone();
             }
         });
 };
 
 trackmybank.add_transaction = function () {
     $("#transactions").append(trackmybank.transaction_html.clone());
+    $("#del-subtr").show();
+};
+
+trackmybank.del_transaction = function () {
+    let transactions = $("#transactions .transaction");
+    transactions.last().remove();
+    if (transactions.length === 1) {
+        $("#del-subtr").hide();
+    }
 };
 
 trackmybank.cancel = function() {
     $("#transactions .transaction").remove();
     trackmybank.add_transaction();
+    $("#del-subtr").hide();
 };
 
 trackmybank.hide_notify = function() {

@@ -56,6 +56,20 @@ form button {
     padding: 5px 10px;
 }
 
+button#send {
+    width: 100px;
+}
+
+button#add-subtr, button#del-subtr {
+    width: 80px;
+    text-align: center;
+}
+
+form .newline button {
+    margin-top: 15px;
+    margin-left: 114px;
+}
+
 #login {
     height: calc(100% - 110px);
     padding-top: calc(50% - 90px);

@@ -30,7 +30,6 @@ trackmybank.login = function() {
                 $("#logged").show();
                 if ("categories" in data) {
                     $.each(data["categories"], function(c, cat) {
-                        console.log(cat);
                         $("#category").append(new Option(cat["name"], cat["id"]));
                     });
                 }
@@ -56,17 +55,22 @@ trackmybank.ajax = function (url, data, success, error, method = "POST", async =
             method: method,
             data: data,
             success: success,
-            error: error || function (data) {
-                try {
-                    data = JSON.parse(data.responseText);
-                    if ("message" in data) {
-                        trackmybank.notify("error", data.message);
-                        return true;
+            error: error || function (res) {
+                if (res.status === 0) {
+                    trackmybank.notify("error", "Vérifiez votre connexion internet.");
+                    return false;
+                } else {
+                    try {
+                        data = JSON.parse(res.responseText);
+                        if ("message" in data) {
+                            trackmybank.notify("error", data.message);
+                            return true;
+                        }
+                    } catch (e) {
+                        // do nothing
                     }
-                } catch (e) {
-                    // do nothing
+                    trackmybank.notify("error", "Une erreur est survenue. Veuillez contacter le support.");
                 }
-                trackmybank.notify("error","Une erreur est survenue. Veuillez contacter le support.");
             },
             async: async,
         }

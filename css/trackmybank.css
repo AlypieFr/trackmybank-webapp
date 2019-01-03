@@ -17,6 +17,7 @@ h1 {
     font-size: 30pt;
     line-height: 60px;
     margin-top: 0;
+    margin-bottom: 0;
     text-align: center;
 }
 
@@ -68,4 +69,23 @@ form button {
     margin-right: auto;
     display: block;
     text-align: center;
+}
+
+#notify {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #000;
+    padding: 5px;
+}
+
+#notify.error {
+    background: #ff413c;
+}
+
+#notify.success {
+    background: #5cb85c;
+}
+
+#notify.warn {
+    background: #bb842e;
 }

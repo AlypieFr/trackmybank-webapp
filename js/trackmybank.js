@@ -1,6 +1,7 @@
 trackmybank = {};
 
 trackmybank.timeout = null;
+trackmybank.transaction_html = null;
 
 trackmybank.init = function() {
     $("#dologin").on("click touch", trackmybank.login);
@@ -11,6 +12,24 @@ trackmybank.init = function() {
     $("form#add-form").on("submit", function(e) {
         e.preventDefault();
     });
+    $("#add-subtr").on("click touch", trackmybank.add_transaction);
+    trackmybank.transaction_html = $("#transactions .transaction:first");
+    $("#reset").on("click touch", trackmybank.cancel);
+};
+
+trackmybank.init_special_fields = function () {
+    trackmybank.set_datemask();
+};
+
+trackmybank.set_datemask = function (element) {
+    // Datetime picker:
+    $(element ? element : '.datepicker').datepicker({
+        format: "dd/mm/yyyy",
+        weekStart: 1,
+        todayBtn: "linked",
+        language: "fr",
+        autoclose: true
+    }).attr("readonly", "readonly");
 };
 
 trackmybank.login = function() {
@@ -33,9 +52,19 @@ trackmybank.login = function() {
                         $("#category").append(new Option(cat["name"], cat["id"]));
                     });
                 }
+                trackmybank.init_special_fields();
                 credentials.token = data["token"];
             }
         });
+};
+
+trackmybank.add_transaction = function () {
+    $("#transactions").append(trackmybank.transaction_html.clone());
+};
+
+trackmybank.cancel = function() {
+    $("#transactions .transaction").remove();
+    trackmybank.add_transaction();
 };
 
 trackmybank.hide_notify = function() {

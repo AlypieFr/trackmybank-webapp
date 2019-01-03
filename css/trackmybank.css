@@ -5,10 +5,16 @@
 
 body {
     background: #200444;
+    margin-top: 60px;
+}
+
+h1, label {
     color: #fff;
 }
 
 h1 {
+    position: fixed;
+    width: 100%;
     display: block;
     height: 60px;
     background: #000 url("../img/trackmybank.png") no-repeat 5px 5px;
@@ -16,17 +22,14 @@ h1 {
     font-family: signatra;
     font-size: 30pt;
     line-height: 60px;
-    margin-top: 0;
+    margin-top: -60px;
     margin-bottom: 0;
     text-align: center;
+    z-index: 1000;
 }
 
 form {
     padding: 0 20px 20px;
-}
-
-select, input, button {
-    color: #000;
 }
 
 form label, form input, form select {
@@ -36,6 +39,10 @@ form label, form input, form select {
 
 form label {
     margin-top: 20px;
+}
+
+form label.first {
+    margin-top: 0;
 }
 
 form select {
@@ -88,4 +95,17 @@ form button {
 
 #notify.warn {
     background: #bb842e;
+}
+
+div.transaction {
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+div.transaction:first-of-type {
+    margin-top: 0;
+}
+
+div.date-div {
+    position: relative;
 }

@@ -6,12 +6,13 @@
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker3.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/trackmybank.css"/>
     <script type="application/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script type="application/javascript" src="js/moment-with-locales.min.js"></script>
     <script type="application/javascript" src="js/bootstrap.min.js"></script>
-    <script type="application/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+    <script type="application/javascript" src="js/bootstrap-datepicker.min.js"></script>
+    <script type="application/javascript" src="js/bootstrap-datepicker.fr.min.js"></script>
     <script type="application/javascript" src="js/credentials.js"></script>
     <script type="application/javascript" src="js/trackmybank.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,14 +35,21 @@
 
 <div id="logged" style="display: none;">
     <form action="#" id="add-form">
-        <label for="date_t">Date de la transaction</label>
-        <input id="date_t" class="datemask datepicker" autocomplete="off"/>
-        <label for="amount">Montant</label>
-        <input class="money decimal" id="amount"/>
-        <label for="category">Catégorie</label>
-        <select id="category" class="select2">
-            <option></option>
-        </select>
+        <div class="date-div">
+            <label for="date_t">Date de la transaction</label>
+            <input id="date_t" class="datepicker" autocomplete="off"/>
+        </div>
+        <div id="transactions">
+            <div class="transaction">
+                <hr width="50%">
+                <label for="amount" class="first">Montant</label>
+                <input class="money" id="amount" type="number" step="0.01"/>
+                <label for="category">Catégorie</label>
+                <select id="category" class="select2">
+                    <option></option>
+                </select>
+            </div>
+        </div>
         <button id="send">Envoyer</button>
         <button id="add-subtr">+ item</button>
         <button id="reset">Annuler</button>

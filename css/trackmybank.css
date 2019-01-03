@@ -10,18 +10,18 @@ body {
 
 h1 {
     display: block;
-    height: 110px;
+    height: 60px;
     background: #000 url("../img/trackmybank.png") no-repeat 5px 5px;
-    background-size: 100px 100px;
+    background-size: 50px 50px;
     font-family: signatra;
-    font-size: 60pt;
-    line-height: 110px;
+    font-size: 30pt;
+    line-height: 60px;
     margin-top: 0;
     text-align: center;
 }
 
 form {
-    padding: 20px;
+    padding: 0 20px 20px;
 }
 
 select, input, button {
@@ -30,7 +30,7 @@ select, input, button {
 
 form label, form input, form select {
     width: 100%;
-    font-size: 40pt;
+    font-size: 18pt;
 }
 
 form label {
@@ -38,14 +38,14 @@ form label {
 }
 
 form select {
-    height: 90px;
+    height: 40px;
 }
 
 form button {
-    margin-top: 40px;
-    font-size: 40pt;
-    margin-right: 40px;
-    padding: 10px 20px;
+    margin-top: 30px;
+    font-size: 15pt;
+    margin-right: 10px;
+    padding: 5px 10px;
 }
 
 #login {
@@ -54,7 +54,15 @@ form button {
     padding-bottom: 50%;
 }
 
-#login form input, #login form label, #login form button {
+#login form input, #login form label {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}
+
+#login form button {
     width: 50%;
     margin-left: auto;
     margin-right: auto;

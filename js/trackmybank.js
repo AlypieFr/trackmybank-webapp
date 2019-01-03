@@ -65,6 +65,7 @@ trackmybank.login = function() {
 trackmybank.add_transaction = function () {
     $("#transactions").append(trackmybank.transaction_html.clone());
     $("#del-subtr").show();
+    trackmybank.scroll_to_bottom();
 };
 
 trackmybank.del_transaction = function () {
@@ -85,11 +86,27 @@ trackmybank.hide_notify = function() {
     $("#notify").html("").attr("class", "").hide();
 };
 
+trackmybank.scroll_to_top = function(callback) {
+    $("html, body").animate({ scrollTop: 0 }, 200);
+    if (callback !== null) {
+        setTimeout(callback, 200);
+    }
+};
+
+trackmybank.scroll_to_bottom = function(callback) {
+    $("html, body").animate({ scrollTop: $(document).height() }, 200);
+    if (callback !== null) {
+        setTimeout(callback, 200);
+    }
+};
+
 trackmybank.notify = async function(level, message) {
-    $("#notify").html(message).attr("class", level).show();
-    trackmybank.timeout = setTimeout(function(){
-        $("#notify").html("").attr("class", "").hide();
-    }, 5000);
+    trackmybank.scroll_to_top(function() {
+        $("#notify").html(message).attr("class", level).addClass('animated zoomIn').show();
+        trackmybank.timeout = setTimeout(function(){
+            $("#notify").removeClass("animated zoomIn").addClass("animated fadeOutUp").hide().html("").attr("class", "");
+        }, 5000);
+    });
 };
 
 trackmybank.ajax = function (url, data, success, error, method = "POST", async = true) {

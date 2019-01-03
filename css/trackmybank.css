@@ -111,6 +111,10 @@ form .newline button {
     background: #bb842e;
 }
 
+#notify {
+    animation-duration: 0.3s;
+}
+
 div.transaction {
     margin-top: 10px;
     padding-bottom: 10px;

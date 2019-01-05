@@ -53,7 +53,7 @@ trackmybank.login = function() {
             password: $("#password").val(),
             authorized_key: credentials.app_key
         },
-        function(data, success) {
+        function(data) {
             if ("success" in data && data["success"]) {
                 if (trackmybank.timeout !== null) {
                     clearTimeout(trackmybank.timeout);
@@ -80,7 +80,7 @@ trackmybank.send = function() {
     let transation_date = $("#date_t").val();
     let valid = true;
     $.each($("#transactions").find(".transaction"), function(t, transaction) {
-        let tr = $(transaction)
+        let tr = $(transaction);
         let montant = tr.find(".amount").val();
         let category = tr.find(".category").val();
         if (montant === "" || category === "") {
@@ -97,7 +97,7 @@ trackmybank.send = function() {
         trackmybank.post(credentials.url + "/api/transactions/", {
             transation_date: transation_date,
             transactions: transactions
-        }, function(data, success) {
+        }, function(data) {
             try {
                 if ("success" in data && data["success"] === true) {
                     trackmybank.cancel();
@@ -130,9 +130,9 @@ trackmybank.add_transaction = function () {
 };
 
 trackmybank.del_transaction = function () {
-    let transactions = $("#transactions .transaction");
-    transactions.last().remove();
-    if (transactions.length === 1) {
+    let transactions = $("#transactions");
+    transactions.find(".transaction").last().remove();
+    if (transactions.find(".transaction").length === 1) {
         $("#del-subtr").hide();
     }
 };

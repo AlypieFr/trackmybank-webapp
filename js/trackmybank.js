@@ -81,14 +81,16 @@ trackmybank.send = function() {
     let valid = true;
     $.each($("#transactions").find(".transaction"), function(t, transaction) {
         let tr = $(transaction);
+        let description = tr.find(".description").val();
         let montant = tr.find(".amount").val();
         let category = tr.find(".category").val();
-        if (montant === "" || category === "") {
+        if (montant === "" || category === "" || description === "") {
             trackmybank.notify("error", "Erreur : tous les champs sont requis !");
             valid = false;
             return false;
         }
         transactions.push({
+            "description": description,
             "amount": parseFloat(montant),
             "category": parseInt(category)
         })

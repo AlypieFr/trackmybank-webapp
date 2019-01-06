@@ -280,38 +280,50 @@ trackmybank.notify = async function(level, message) {
     });
 };
 
-trackmybank.ajax = function (url, data, success, error, method = "POST", async = true) {
-    let options = {
-        method: method,
-        data: data,
-        success: success,
-        error: error || function (res) {
-            if (res.status === 0) {
-                trackmybank.notify("error", "Vérifiez votre connexion internet.");
-                return false;
-            } else {
-                try {
-                    data = JSON.parse(res.responseText);
-                    if ("message" in data) {
-                        trackmybank.notify("error", data.message);
-                        return true;
+trackmybank.ajax = function (url, data, success_m, error_m, method = "POST", async = true) {
+    let loading = $(".loading");
+    loading.show();
+    setTimeout(function() {
+        let options = {
+            method: method,
+            data: data,
+            success: function (data, success) {
+                success_m(data, success);
+                loading.hide();
+            },
+            error: function (res) {
+                loading.hide();
+                if (error_m === undefined) {
+                    if (res.status === 0) {
+                        trackmybank.notify("error", "Vérifiez votre connexion internet.");
+                        return false;
+                    } else {
+                        try {
+                            data = JSON.parse(res.responseText);
+                            if ("message" in data) {
+                                trackmybank.notify("error", data.message);
+                                return true;
+                            }
+                        } catch (e) {
+                            // do nothing
+                        }
+                        trackmybank.notify("error", "Une erreur est survenue. Veuillez contacter le support.");
                     }
-                } catch (e) {
-                    // do nothing
+                } else {
+                    error_m(res);
                 }
-                trackmybank.notify("error", "Une erreur est survenue. Veuillez contacter le support.");
+            },
+            async: async,
+        };
+        if (credentials.token !== undefined) {
+            options["beforeSend"] = function (xhr) {
+                xhr.setRequestHeader("Authorization", "Token " + credentials.token);
             }
-        },
-        async: async,
-    };
-    if (credentials.token !== undefined) {
-       options["beforeSend"] = function (xhr) {
-            xhr.setRequestHeader("Authorization", "Token " + credentials.token);
         }
-    }
-    $.ajax(url,
-        options
-    );
+        $.ajax(url,
+            options
+        );
+    }, 0);
 };
 
 trackmybank.post = function (url, data, success, error, async = true) {

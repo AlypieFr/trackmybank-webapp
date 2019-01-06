@@ -114,13 +114,16 @@ trackmybank.show_addition = function() {
     let addition = $("#addition");
     addition.html("");
     let empty = true;
+    let full_total = 0;
     $(".transaction").each(function(t, transaction) {
         let s_desc = $(transaction).find(".description").val();
         let s_cat = $(transaction).find(".category option:selected").text();
         if (trackmybank.amounts[t].length > 0 && s_cat !== "" && s_desc !== "") {
             empty = false;
+            let t_total = trackmybank.getTotal(t);
+            full_total += parseFloat(t_total);
             addition.append($("<h2>").html(s_desc + " (" +
-                s_cat + ") - " + trackmybank.getTotal(t) + " €"));
+                s_cat + ") - " + t_total + " €"));
             let table = $("<table>").attr("class", "table-striped addition");
             for (let i=0; i<trackmybank.amounts[t].length; i++) {
                 let row = $("<tr>");
@@ -132,6 +135,8 @@ trackmybank.show_addition = function() {
         }
     });
     if (!empty) {
+        addition.append($("<h2>").html("Total"));
+        addition.append($("<p>").attr("class", "total-addition").html(trackmybank.getStringAmount(full_total) + " €"));
         addition.append($("<button>").attr("id", "goback").attr("type", "button").html("Retour"));
         $("#logged").hide();
         addition.show();

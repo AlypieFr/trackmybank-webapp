@@ -29,7 +29,7 @@ h1 {
 }
 
 h2 {
-    font-size: 20pt;
+    font-size: 16pt;
 }
 
 form {
@@ -75,6 +75,7 @@ form input.addition {
 
 form label {
     margin-top: 20px;
+    padding-right: 4px;
 }
 
 form label.first {
@@ -87,9 +88,9 @@ form select {
 
 form button {
     margin-top: 30px;
-    font-size: 15pt;
-    margin-right: 7px;
-    padding: 5px 10px;
+    font-size: 13pt;
+    margin-right: 6px;
+    padding: 5px 6px;
 }
 
 form button.last {
@@ -101,17 +102,17 @@ form button#show-addition {
 }
 
 button#send {
-    width: 100px;
+    width: 90px;
 }
 
 button#add-subtr, button#del-subtr {
-    width: 80px;
+    width: 75px;
     text-align: center;
 }
 
 form .newline button {
-    margin-top: 15px;
-    margin-left: 114px;
+    margin-top: 10px;
+    margin-left: 98px;
 }
 
 #login {
@@ -202,6 +203,12 @@ button#goback {
     margin-top: 25px;
     padding: 5px 10px;
     font-size: 14pt;
+}
+
+p.total-addition {
+    color: #fff;
+    font-size: 14pt;
+    font-weight: bold;
 }
 
 /* Loading */

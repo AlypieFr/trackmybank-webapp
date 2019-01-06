@@ -8,7 +8,7 @@ body {
     margin-top: 60px;
 }
 
-h1, label {
+h1, h2, label, table {
     color: #fff;
 }
 
@@ -28,13 +28,49 @@ h1 {
     z-index: 1000;
 }
 
+h2 {
+    font-size: 20pt;
+}
+
 form {
     padding: 0 20px 20px;
 }
 
-form label, form input, form select {
-    width: 100%;
+form label {
+    width: 60px;
     font-size: 18pt;
+    text-align: right;
+}
+
+form input, form select {
+    width: calc(100% - 65px);
+    font-size: 18pt;
+}
+
+form input.amount {
+    width: calc(100% - 115px);
+    /*width: calc(100% - 242px)*/
+}
+
+form input.total-amount {
+    width: 100px;
+}
+
+form p.plus {
+    width: 20px;
+    color: #fff;
+    font-size: 20pt;
+    text-align: center;
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+form div.total {
+    display: inline-block;
+}
+
+form input.addition {
+    width: 45px;
 }
 
 form label {
@@ -52,8 +88,16 @@ form select {
 form button {
     margin-top: 30px;
     font-size: 15pt;
-    margin-right: 10px;
+    margin-right: 7px;
     padding: 5px 10px;
+}
+
+form button.last {
+    margin-right: 0;
+}
+
+form button#show-addition {
+    width: 45px;
 }
 
 button#send {
@@ -126,4 +170,36 @@ div.transaction:first-of-type {
 
 div.date-div {
     position: relative;
+}
+
+table tr, table td {
+    height: 35px !important;
+    line-height: 30px;
+    font-size: 14pt;
+}
+
+table {
+    width: 100% !important;
+}
+
+table.table-striped tr:nth-child(odd) {
+    background: #353535;
+}
+
+table.table-striped tr:nth-child(even) {
+    background: #1d1d1d;
+}
+
+table.addition tr td:first-of-type {
+    padding-left: 20px;
+}
+
+div#addition {
+    padding: 1px 20px 20px;
+}
+
+button#goback {
+    margin-top: 25px;
+    padding: 5px 10px;
+    font-size: 14pt;
 }

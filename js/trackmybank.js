@@ -3,6 +3,12 @@ trackmybank = {};
 trackmybank.timeout = null;
 trackmybank.transaction_html = null;
 
+trackmybank.amounts = [[]];
+
+function getSum(total, num) {
+    return total + num;
+}
+
 trackmybank.init = function() {
     $("#dologin").on("click touch", trackmybank.login);
     $("form#login-form").on("submit", function(e) {
@@ -11,11 +17,18 @@ trackmybank.init = function() {
     });
     $("form#add-form").on("submit", function(e) {
         e.preventDefault();
+        return false;
     });
     $("#add-subtr").on("click touch", trackmybank.add_transaction);
     $("#del-subtr").on("click touch", trackmybank.del_transaction);
     $("#reset").on("click touch", trackmybank.cancel);
     $("#send").on("click touch", trackmybank.send);
+    $(document).on("click touch", "input.addition", trackmybank.transaction_addition);
+    $(document).on("keypress", "input.amount", function(e) {
+        if (e.which === 13) {
+            trackmybank._transaction_addition($(this).parent("div.transaction"));
+        }
+    });
     $(document).on("keypress", ".money", function() {
         let value = $(this).val();
         let comma = value.indexOf(".");
@@ -26,7 +39,9 @@ trackmybank.init = function() {
                 $(this).val(value.substr(0, len - (len_after_comma - 2)));
             }
         }
-    })
+    });
+    $("#show-addition").on("click touch", trackmybank.show_addition);
+    $(document).on("click touch", "#goback", trackmybank.goback);
 };
 
 trackmybank.init_special_fields = function () {
@@ -66,23 +81,74 @@ trackmybank.login = function() {
                         $(".category").append(new Option(cat["name"], cat["id"]));
                     });
                 }
+                if ("months" in data) {
+                    $.each(data["months"], function (m, month) {
+                        let option = new Option(month["name"], month["id"]);
+                        if ("current_month" in data && month["id"] === data["current_month"]) {
+                            option.selected = true;
+                        }
+                        $("#month").append(option);
+                    })
+                }
                 trackmybank.init_special_fields();
                 credentials.token = data["token"];
                 $("#date_t").val( moment().format('DD/MM/YYYY') );
-                trackmybank.transaction_html = $("#transactions .transaction:first").clone();
+                trackmybank.transaction_html = $("#transactions .transaction:first").data("nb", 0).clone();
             }
         });
 };
 
+trackmybank.force_additions = function() {
+    $(".addition").each(function() {
+        $(this).trigger("click");
+    });
+};
+
+trackmybank.goback = function() {
+    $("#addition").hide();
+    $("#logged").show();
+}
+
+trackmybank.show_addition = function() {
+    trackmybank.force_additions();
+    let addition = $("#addition");
+    addition.html("");
+    let empty = true;
+    $(".transaction").each(function(t, transaction) {
+        let s_desc = $(transaction).find(".description").val();
+        let s_cat = $(transaction).find(".category option:selected").text();
+        if (trackmybank.amounts[t].length > 0 && s_cat !== "" && s_desc !== "") {
+            empty = false;
+            addition.append($("<h2>").html(s_desc + " (" +
+                s_cat + ") - " + trackmybank.getTotal(t) + " €"));
+            let table = $("<table>").attr("class", "table-striped addition");
+            for (let i=0; i<trackmybank.amounts[t].length; i++) {
+                let row = $("<tr>");
+                row.append($("<td>").html("&#x2713;"));
+                row.append($("<td>").html(trackmybank.getStringAmount(trackmybank.amounts[t][i]) + " €"));
+                table.append(row);
+            }
+            addition.append(table);
+        }
+    });
+    if (!empty) {
+        addition.append($("<button>").attr("id", "goback").attr("type", "button").html("Retour"));
+        $("#logged").hide();
+        addition.show();
+    }
+};
+
 trackmybank.send = function() {
+    trackmybank.force_additions();
     trackmybank.hide_notify();
     let transactions = [];
+    let month = parseInt($("#month").val());
     let transation_date = $("#date_t").val();
     let valid = true;
     $.each($("#transactions").find(".transaction"), function(t, transaction) {
         let tr = $(transaction);
         let description = tr.find(".description").val();
-        let montant = tr.find(".amount").val();
+        let montant = trackmybank.getTotal(t);
         let category = tr.find(".category").val();
         if (montant === "" || category === "" || description === "") {
             trackmybank.notify("error", "Erreur : tous les champs sont requis !");
@@ -97,8 +163,9 @@ trackmybank.send = function() {
     });
     if (valid) {
         trackmybank.post(credentials.url + "/api/transactions/", {
-            transation_date: transation_date,
-            transactions: transactions
+            month: month,
+            transaction_date: transation_date,
+            transactions: JSON.stringify(transactions)
         }, function(data) {
             try {
                 if ("success" in data && data["success"] === true) {
@@ -125,15 +192,56 @@ trackmybank.send = function() {
     }
 };
 
+trackmybank.getStringAmount = function(amount) {
+    let number = amount.toString();
+    let comma = number.indexOf(".");
+    if (comma === -1) {
+        comma = number.indexOf(",");
+        if (comma === -1) {
+            comma = number.length;
+        }
+    }
+    return parseFloat(number).toPrecision(comma + 2);
+};
+
+trackmybank.getTotal = function(nbSubTr) {
+    if (trackmybank.amounts[nbSubTr].length === 0) {
+        return ""
+    }
+    let number = trackmybank.amounts[nbSubTr].reduce(getSum).toString();
+    return trackmybank.getStringAmount(number);
+};
+
+trackmybank._transaction_addition = function(transaction) {
+    let nb = transaction.data("nb");
+    let to_add = transaction.find(".amount").val();
+    if (to_add !== "") {
+        to_add = parseFloat(to_add);
+        if (trackmybank.amounts[nb].length === 0) {
+            transaction.find(".amount").css("width", "calc(100% - 242px)");
+            transaction.find(".total").show();
+        }
+        trackmybank.amounts[nb].push(to_add);
+        transaction.find(".total-amount").val(trackmybank.getTotal(nb));
+        transaction.find(".amount").val("");
+    }
+};
+
+trackmybank.transaction_addition = function() {
+    trackmybank._transaction_addition($(this).parent("div.transaction"));
+};
+
 trackmybank.add_transaction = function () {
-    $("#transactions").append(trackmybank.transaction_html.clone());
+    $("#transactions").append(trackmybank.transaction_html.clone().data("nb", trackmybank.amounts.length));
     $("#del-subtr").show();
+    trackmybank.amounts.push([]);
     trackmybank.scroll_to_bottom();
 };
 
 trackmybank.del_transaction = function () {
     let transactions = $("#transactions");
     transactions.find(".transaction").last().remove();
+    trackmybank.amounts.splice(-1, 1);
     if (transactions.find(".transaction").length === 1) {
         $("#del-subtr").hide();
     }

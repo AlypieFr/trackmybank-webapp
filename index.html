@@ -37,29 +37,42 @@
 <div id="logged" style="display: none;">
     <form action="#" id="add-form">
         <div class="date-div">
-            <label for="date_t">Date de la transaction</label>
+            <label for="month" class="i-month">Mois</label>
+            <select id="month" class="select2">
+            </select>
+            <label for="date_t">Date</label>
             <input id="date_t" class="datepicker" autocomplete="off"/>
         </div>
         <div id="transactions">
             <div class="transaction">
                 <hr width="50%">
-                <label class="first">Description</label>
+                <label class="first">Desc</label>
                 <input class="description" type="text" maxlength="255"/>
-                <label>Montant</label>
+                <label>€</label>
+                <div class="total" style="display: none">
+                    <input class="money total-amount" type="number" step="0.01" readonly="readonly"/>
+                    <p class="plus"> + </p>
+                </div>
                 <input class="money amount" type="number" step="0.01"/>
-                <label>Catégorie</label>
+                <input type="button" value="+" class="addition"/>
+                <label>Cat</label>
                 <select class="category select2">
                     <option></option>
                 </select>
             </div>
         </div>
-        <button id="send">Envoyer</button>
-        <button id="add-subtr">+ item</button>
-        <button id="reset">Annuler</button>
+        <button type="button" id="send">Envoyer</button>
+        <button type="button" id="add-subtr">+ item</button>
+        <button type="button" id="reset">Annuler</button>
+        <button type="button" class="last" id="show-addition">=</button>
         <div class="newline">
-            <button id="del-subtr" style="display: none;">- item</button>
+            <button type="button" id="del-subtr" style="display: none;">- item</button>
         </div>
     </form>
+</div>
+
+<div id="addition" style="display: none;">
+
 </div>
 
 </body>

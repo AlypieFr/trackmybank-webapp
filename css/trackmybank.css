@@ -8,7 +8,7 @@ body {
     margin-top: 60px;
 }
 
-h1, h2, label, table {
+h1, h2, label, table.addition {
     color: #fff;
 }
 
@@ -173,13 +173,13 @@ div.date-div {
     position: relative;
 }
 
-table tr, table td {
-    height: 35px !important;
+table.addition tr, table td {
+    height: 40px !important;
     line-height: 30px;
     font-size: 14pt;
 }
 
-table {
+table.addition {
     width: 100% !important;
 }
 
@@ -197,6 +197,10 @@ table.addition tr td:first-of-type {
 
 div#addition {
     padding: 1px 20px 20px;
+}
+
+table.addition tr.selected {
+    background: #1c728c !important;
 }
 
 button#goback {

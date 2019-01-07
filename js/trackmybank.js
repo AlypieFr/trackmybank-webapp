@@ -42,6 +42,14 @@ trackmybank.init = function() {
     });
     $("#show-addition").on("click touch", trackmybank.show_addition);
     $(document).on("click touch", "#goback", trackmybank.goback);
+    $(document).on("click touch", "table.addition tr", function() {
+        if ($(this).hasClass("selected")) {
+            $(this).removeClass("selected");
+        }
+        else {
+            $(this).addClass("selected");
+        }
+    });
 };
 
 trackmybank.init_special_fields = function () {

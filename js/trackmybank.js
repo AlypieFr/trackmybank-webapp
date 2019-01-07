@@ -214,7 +214,7 @@ trackmybank.getStringAmount = function(amount) {
             comma = number.length;
         }
     }
-    return parseFloat(number).toPrecision(comma + 2);
+    return parseFloat(number).toPrecision(comma + (comma >= 2 ? 2 : 1));
 };
 
 trackmybank.getTotal = function(nbSubTr) {

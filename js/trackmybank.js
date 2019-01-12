@@ -263,6 +263,7 @@ trackmybank.del_transaction = function () {
 
 trackmybank.cancel = function() {
     $("#transactions .transaction").remove();
+    trackmybank.amounts = [];
     trackmybank.add_transaction();
     $("#del-subtr").hide();
 };

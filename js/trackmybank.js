@@ -11,6 +11,7 @@ function getSum(total, num) {
 
 trackmybank.init = function() {
     $("#dologin").on("click touch", trackmybank.login);
+    $(".letter").on("click touch", trackmybank.entercode);
     $("form#login-form").on("submit", function(e) {
         e.preventDefault();
         trackmybank.login();
@@ -54,6 +55,14 @@ trackmybank.init = function() {
 
 trackmybank.init_special_fields = function () {
     trackmybank.set_datemask();
+};
+
+trackmybank.entercode = function() {
+    let passwords = $("#password");
+    passwords.val(passwords.val() + $(this).html());
+    if (passwords.val().length > 4) {
+        passwords.val("");
+    }
 };
 
 trackmybank.set_datemask = function (element) {
@@ -115,7 +124,7 @@ trackmybank.force_additions = function() {
 trackmybank.goback = function() {
     $("#addition").hide();
     $("#logged").show();
-}
+};
 
 trackmybank.show_addition = function() {
     trackmybank.force_additions();

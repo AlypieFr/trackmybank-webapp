@@ -37,8 +37,23 @@
 <div id="login">
     <form action="#" id="login-form">
         <label for="password">Pin</label>
-        <input id="password" type="password" pattern="[0-9]{4}" maxlength="4" inputmode="numeric"/>
-        <button type="button" id="dologin">Se connecter</button>
+        <div id="container">
+            <input id="password" type="password" pattern="[0-9]{4}" maxlength="4" inputmode="numeric"/>
+            <ul id="keyboard">
+                <li class="letter">7</li>
+                <li class="letter">8</li>
+                <li class="letter">9</li>
+                <li class="letter clearl">4</li>
+                <li class="letter">5</li>
+                <li class="letter">6</li>
+
+                <li class="letter clearl">1</li>
+                <li class="letter ">2</li>
+                <li class="letter">3</li>
+                <li class="letter clearl">0</li>
+                <li id="dologin" class="return">Login</li>
+            </ul>
+        </div>
     </form>
 </div>
 
